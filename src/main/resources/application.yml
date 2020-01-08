@@ -1,0 +1,38 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: springboot-quartz-qutickstart
+  datasource:
+    url: jdbc:postgresql://localhost:5432/iotwuxi
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  quartz:
+    # quartz 相关属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: clusteredScheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.PostgreSQLDelegate
+            tablePrefix: QRTZ_
+            isClustered: true
+            clusterCheckinInterval: 10000
+            useProperties: false
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    #数据库方式
+    job-store-type: jdbc
+
+  jpa:
+    open-in-view: false
+    show-sql: false
